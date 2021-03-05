@@ -1,0 +1,174 @@
+<!DOCTYPE HTML>
+<!--
+	Transitive by TEMPLATED
+	templated.co @templatedco
+	Released for free under the Creative Commons Attribution 3.0 license (templated.co/license)
+-->
+<html>
+	<head>
+		<title>Daniel Silva</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+        <link rel="stylesheet" href="assets/css/main.css" />
+        <link rel="stylesheet" href="assets/css/tictactoe.css" />
+    </head>
+    <script src="https://unpkg.com/react@16/umd/react.production.min.js"></script>
+  <script src="https://unpkg.com/react-dom@16/umd/react-dom.production.min.js"></script>
+  <script src="https://unpkg.com/babel-standalone@6.15.0/babel.min.js"></script>
+	<body>
+
+		<!-- Header -->
+			<header id="header" class="alt">
+				<div class="logo"><a href="index.html">Web Portfolio <span>for Daniel Silva</span></a></div>
+				<a href="#menu" class="toggle"><span>Menu</span></a>
+			</header>
+
+		<!-- Nav -->
+			<nav id="menu">
+				<ul class="links">
+					<li><a href="index.html">Home</a></li>
+					<!-- <li><a href="generic.html">Projects</a></li> -->
+					<li><a href="resume.html">Resume</a></li>
+					<li><a href="contact.html">Contact</a></li>
+					<li style="line-height: 5.5em; border-top: solid 1px rgba(255, 255, 255, 0.25);"><span><a href="https://github.com/DanSilvaDevs" target="_blank"><i class="fa fa-github" style="font-size:36px; color:white;"></i></a>
+						&nbsp;
+						<a href="https://www.linkedin.com/in/desilva/" target="_blank"><i class="fa fa-linkedin-square" style="font-size:36px; color: #2867B2;"></i></a></span>
+					</li>
+				</ul>
+			</nav>
+
+		<!-- Banner -->
+		<!--
+			To use a video as your background, set data-video to the name of your video without
+			its extension (eg. images/banner). Your video must be available in both .mp4 and .webm
+			formats to work correctly.   
+		-->
+
+            <div id="mydiv"></div>
+
+            <script type="text/babel">
+              function Square(props) {
+            return (
+              <button className="square" onClick={props.onClick}>
+                {props.value}
+              </button>
+            );
+          }
+          
+          class Board extends React.Component {
+            constructor(props) {
+              super(props);
+              this.state = {
+                squares: Array(9).fill(null),
+                xIsNext: true,
+              };
+            }
+          
+            handleClick(i) {
+              const squares = this.state.squares.slice();
+              if (calculateWinner(squares) || squares[i]) {
+                return;
+              }
+              squares[i] = this.state.xIsNext ? 'X' : 'O';
+              this.setState({
+                squares: squares,
+                xIsNext: !this.state.xIsNext,
+              });
+            }
+          
+            renderSquare(i) {
+              return (
+                <Square
+                  value={this.state.squares[i]}
+                  onClick={() => this.handleClick(i)}
+                />
+              );
+            }
+          
+            render() {
+              const winner = calculateWinner(this.state.squares);
+              let status;
+              if (winner) {
+                status = 'Winner: ' + winner + '. Would you like to play again?';
+              } else {
+                status = 'Next player: ' + (this.state.xIsNext ? 'X' : 'O');
+              }
+          
+              return (
+                <div>
+                  <div className="status">{status}</div>
+                  <div className="board-row">
+                    {this.renderSquare(0)}
+                    {this.renderSquare(1)}
+                    {this.renderSquare(2)}
+                  </div>
+                  <div className="board-row">
+                    {this.renderSquare(3)}
+                    {this.renderSquare(4)}
+                    {this.renderSquare(5)}
+                  </div>
+                  <div className="board-row">
+                    {this.renderSquare(6)}
+                    {this.renderSquare(7)}
+                    {this.renderSquare(8)}
+                  </div>
+                </div>
+              );
+            }
+          }
+          
+          class Game extends React.Component {
+            render() {
+              return (
+                <div className="game">
+                  <div className="game-board">
+                    <Board />
+                  </div>
+                  <div className="game-info">
+                    <div>{/* status */}</div>
+                    <ol>{/* TODO */}</ol>
+                  </div>
+                </div>
+              );
+            }
+          }
+          
+          // ========================================
+          
+          ReactDOM.render(
+            <Game />,
+            document.getElementById('mydiv')
+          );
+          
+          function calculateWinner(squares) {
+            const lines = [
+              [0, 1, 2],
+              [3, 4, 5],
+              [6, 7, 8],
+              [0, 3, 6],
+              [1, 4, 7],
+              [2, 5, 8],
+              [0, 4, 8],
+              [2, 4, 6],
+            ];
+            for (let i = 0; i < lines.length; i++) {
+              const [a, b, c] = lines[i];
+              if (squares[a] && squares[a] === squares[b] && squares[a] === squares[c]) {
+                return squares[a];
+              }
+            }
+            return null;
+          }
+          
+            </script>
+
+		<!-- Scripts -->
+			<script src="assets/js/jquery.min.js"></script>
+			<script src="assets/js/jquery.scrolly.min.js"></script>
+			<script src="assets/js/jquery.scrollex.min.js"></script>
+			<script src="assets/js/skel.min.js"></script>
+			<script src="assets/js/util.js"></script>
+			<script src="assets/js/main.js"></script>
+
+	</body>
+</html>
