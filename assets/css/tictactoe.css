@@ -280,3 +280,11 @@ ol, ul {
     }
 
   }
+
+  .complete_button {
+    color: black;
+    margin-bottom: 10px;
+  }
+  .empty_button {
+    display: none;
+  }
